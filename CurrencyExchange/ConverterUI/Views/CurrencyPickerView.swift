@@ -68,6 +68,7 @@ final class CurrencyPickerView: UIInputView {
             if let range = textInput.textRange(from: textInput.beginningOfDocument, to: textInput.endOfDocument) {
                 textInput.replace(range, withText: newText)
             }
+            (textInput as? UIResponder)?.resignFirstResponder()
         }
     }
 }

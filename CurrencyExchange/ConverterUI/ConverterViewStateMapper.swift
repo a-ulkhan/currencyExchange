@@ -20,9 +20,8 @@ enum ConverterViewStateMapper {
                     amount: String(format: "%.2f", state.exchangedAmount)
                 )
             ),
-            sourceCurrencyList: state.availableCurrencies.filter { $0 != state.toCurrency },
-            targetCurrencyList: state.availableCurrencies.filter { $0 != state.fromCurrency },
-            isLoading: state.isLoading
+            sourceCurrencyList: state.availableCurrencies.currencies.filter { $0 != state.toCurrency },
+            targetCurrencyList: state.availableCurrencies.currencies.filter { $0 != state.fromCurrency }
         )
     }
 }

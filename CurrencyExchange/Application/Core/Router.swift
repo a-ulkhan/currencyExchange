@@ -10,5 +10,8 @@ import Foundation
 class Router {
     var children: [Router] = []
     func start() {}
-    func stop() {}
+    func stop() {
+        children.forEach { $0.stop()}
+        children.removeAll()
+    }
 }

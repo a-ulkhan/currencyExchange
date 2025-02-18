@@ -21,8 +21,6 @@ final class ConverterViewController: UIViewController {
 
         let sourceCurrencyList: [String]
         let targetCurrencyList: [String]
-
-        let isLoading: Bool
     }
 
     private lazy var _view = ConverterContentView()
@@ -71,14 +69,6 @@ final class ConverterViewController: UIViewController {
             .store(in: &cancellables)
 
         state
-            .map(\.isLoading)
-            .sink { [unowned self] isLoading in
-                _view.isUserInteractionEnabled = !isLoading
-                isLoading ? _view.showLoadingIndicator() : _view.stopLoadingIndicator()
-            }
-            .store(in: &cancellables)
-
-        state
             .sink { [unowned self] state in latestState = state }
             .store(in: &cancellables)
     }
@@ -97,12 +87,10 @@ final class ConverterViewController: UIViewController {
         _view.toInputView.setCurrencyKeyboardInputView(toCurrencySelectorView)
 
         _view.fromInputView.setAmountKeyboardInputAccessory(convertButton)
+        let action = UIAction { [weak self] _ in
+            self?.view.endEditing(true)
+        }
 
-                let action = UIAction { [weak self] _ in
-                    guard let self = self else { return }
-                    self.view.endEditing(true)
-                }
-
-                convertButton.addAction(action, for: .touchUpInside)
+        convertButton.addAction(action, for: .touchUpInside)
     }
 }
