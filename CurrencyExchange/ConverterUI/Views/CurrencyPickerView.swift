@@ -54,7 +54,6 @@ final class CurrencyPickerView: UIInputView {
             guard let self else { return }
             let selectedIndex = pickerView.selectedRow(inComponent: 0)
             let text = dataSource()[selectedIndex]
-            endEditing(true)
             replaceText(with: text)
         }
         confirmButton.addAction(action, for: .touchUpInside)

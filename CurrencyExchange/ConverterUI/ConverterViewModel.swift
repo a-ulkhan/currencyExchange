@@ -32,16 +32,21 @@ final class ConverterViewModel: ViewModel {
     private let availableCurrencyUseCase: any UseCase<Void, CurrencyList>
     private let exchangeRateUseCase: any UseCase<ExchangeRateInput, Double>
 
+    private let exchangeRatePoller: ExchangeCurrencyPoller?
+
     private var fetchExchangeRateTask: Task<Void, Error>?
+    private var cancellables: Set<AnyCancellable> = []
 
     private weak var router: ConverterRouting?
 
     init(
         availableCurrencyUseCase: any UseCase<Void, CurrencyList>,
-        exchangeRateUseCase: any UseCase<ExchangeRateInput, Double>
+        exchangeRateUseCase: any UseCase<ExchangeRateInput, Double>,
+        exchangeRatePoller: ExchangeCurrencyPoller?
     ) {
         self.availableCurrencyUseCase = availableCurrencyUseCase
         self.exchangeRateUseCase = exchangeRateUseCase
+        self.exchangeRatePoller = exchangeRatePoller
 
         state = State(
             fromCurrency: "USD",
@@ -53,6 +58,17 @@ final class ConverterViewModel: ViewModel {
     func didStart(router: Router) {
         self.router = router as? ConverterRouting
         fetchAvailableCurrencies()
+
+        exchangeRatePoller?.state
+            .sink { [unowned  self] exchangedAmount in
+                Task {
+                    await MainActor.run {
+                        state.exchangedAmount = exchangedAmount
+                    }
+                }
+            }
+            .store(in: &cancellables)
+
     }
 
     private func fetchExchangeRate() {
@@ -72,6 +88,7 @@ final class ConverterViewModel: ViewModel {
                     state.exchangedAmount = exchangedAmount
                     router?.closeLoading()
                 }
+                startPolling()
             } catch let error as FetchExchangeRateError {
                 handleFetchError(error)
             }
@@ -85,14 +102,26 @@ final class ConverterViewModel: ViewModel {
                 await MainActor.run {
                     state.availableCurrencies = availableCurrencies
                 }
+                startPolling()
             } catch let error as CurrencyListError {
                 handleAvailableCurrenciesError(error)
             }
         }
     }
 
+    private func startPolling() {
+        let input = ExchangeRateInput(
+            from: state.fromCurrency,
+            to: state.toCurrency,
+            amount: state.currentExchangeAmount
+        )
+        exchangeRatePoller?.startPolling(with: input)
+    }
+
     private func handleFetchError(_ error: FetchExchangeRateError) {
         router?.closeLoading()
+        exchangeRatePoller?.stopPolling()
+
         switch error {
         case .retryableError:
             router?.showError(content: error.message) { [weak self] in
@@ -105,6 +134,8 @@ final class ConverterViewModel: ViewModel {
 
     private func handleAvailableCurrenciesError(_ error: CurrencyListError) {
         router?.closeLoading()
+        exchangeRatePoller?.stopPolling()
+
         switch error {
         case .fetchFailed:
             router?.showError(content: error.message, retryAction: nil)
@@ -126,6 +157,10 @@ extension ConverterViewModel: ConverterViewModelInput {
     func setAmount(_ amount: String) {
         state.currentExchangeAmount = Double(amount) ?? 0
         fetchExchangeRate()
+    }
+
+    func editingStarted() {
+        exchangeRatePoller?.stopPolling()
     }
 }
 

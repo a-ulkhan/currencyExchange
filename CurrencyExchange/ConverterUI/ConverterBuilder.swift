@@ -11,13 +11,15 @@ protocol ConverterDependency {
     var presentationContext: UINavigationController { get }
     var currencyListUseCase: any UseCase<Void, CurrencyList> { get }
     var fetchCurrencyRateUseCase: any UseCase<ExchangeRateInput, Double> { get }
+    var exchangeRatePoller: ExchangeCurrencyPoller? { get }
 }
 
 enum ConverterBuilder {
     static func build(_ dependency: ConverterDependency) -> Router {
         let viewModel = ConverterViewModel(
             availableCurrencyUseCase: dependency.currencyListUseCase,
-            exchangeRateUseCase: dependency.fetchCurrencyRateUseCase
+            exchangeRateUseCase: dependency.fetchCurrencyRateUseCase,
+            exchangeRatePoller: dependency.exchangeRatePoller
         )
 
         let viewState = viewModel.erasedPublisher.map(ConverterViewStateMapper.map(state:)).eraseToAnyPublisher()

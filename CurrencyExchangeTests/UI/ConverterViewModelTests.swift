@@ -76,7 +76,8 @@ final class CurrencyConverterViewModelTests: XCTestCase {
         
         sut = ConverterViewModel(
             availableCurrencyUseCase: mockAvailableCurrencyUseCase,
-            exchangeRateUseCase: mockExchangeRateUseCase
+            exchangeRateUseCase: mockExchangeRateUseCase,
+            exchangeRatePoller: nil
         )
     }
     

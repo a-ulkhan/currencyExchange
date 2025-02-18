@@ -21,6 +21,8 @@ final class ConverterInputView: UIView {
     var onExchangeAmountChanged: ((String) -> Void)?
     var onCurrencyTypeSelected: ((String) -> Void)?
 
+    var onEditingStarted: (() -> Void)?
+
     private let currencyTypeTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 32, weight: .semibold)
@@ -86,6 +88,7 @@ final class ConverterInputView: UIView {
     }
 
     private func setActions() {
+        currencyTypeTextField.delegate = self
         amountTextField.delegate = self
     }
 }
@@ -96,5 +99,9 @@ extension ConverterInputView: UITextFieldDelegate {
         textField === currencyTypeTextField
             ? onCurrencyTypeSelected?(text)
             : onExchangeAmountChanged?(text)
+    }
+
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        onEditingStarted?()
     }
 }

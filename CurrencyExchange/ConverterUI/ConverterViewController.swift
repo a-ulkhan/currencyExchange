@@ -6,13 +6,13 @@
 //
 
 import UIKit
-import UIKit
 import Combine
 
 protocol ConverterViewModelInput: AnyObject {
     func setSourceCurrency(_ currency: String)
     func setTargetCurrency(_ currency: String)
     func setAmount(_ amount: String)
+    func editingStarted()
 }
 
 final class ConverterViewController: UIViewController {
@@ -85,6 +85,9 @@ final class ConverterViewController: UIViewController {
 
         let toCurrencySelectorView = CurrencyPickerView { [weak self] in self?.latestState?.targetCurrencyList ?? [] }
         _view.toInputView.setCurrencyKeyboardInputView(toCurrencySelectorView)
+
+        _view.fromInputView.onEditingStarted = { [weak viewModel] in viewModel?.editingStarted() }
+        _view.toInputView.onEditingStarted = { [weak viewModel] in viewModel?.editingStarted() }
 
         _view.fromInputView.setAmountKeyboardInputAccessory(convertButton)
         let action = UIAction { [weak self] _ in

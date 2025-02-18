@@ -11,8 +11,9 @@ final class ConverterDependencyImpl: ConverterDependency {
     let parent: RootDependencyImpl
 
     var presentationContext: UINavigationController { parent.navigationController }
-    var currencyListUseCase: any UseCase<Void, CurrencyList>
-    var fetchCurrencyRateUseCase: any UseCase<ExchangeRateInput, Double>
+    let currencyListUseCase: any UseCase<Void, CurrencyList>
+    let fetchCurrencyRateUseCase: any UseCase<ExchangeRateInput, Double>
+    let exchangeRatePoller: ExchangeCurrencyPoller?
 
     init(parent: RootDependencyImpl) {
         self.parent = parent
@@ -27,5 +28,10 @@ final class ConverterDependencyImpl: ConverterDependency {
 
         let exchangeRateRepository = DefaultExchangeRateRepository(exchangeRateService: FakeExchangeRateService())
         self.fetchCurrencyRateUseCase = FetchExchangeRateUseCase(repository: exchangeRateRepository)
+
+        self.exchangeRatePoller = ExchangeCurrencyPoller(
+            exchangeCurrencyUseCase: fetchCurrencyRateUseCase,
+            duration: 15
+        )
     }
 }
