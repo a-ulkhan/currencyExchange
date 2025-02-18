@@ -8,10 +8,6 @@
 import UIKit
 
 final class CurrencyPickerView: UIInputView {
-    struct State {
-        let currencies: [String]
-    }
-
     private let confirmButton: UIButton = {
         let button = UIButton()
         button.setTitle("Confirm", for: .normal)
@@ -20,10 +16,10 @@ final class CurrencyPickerView: UIInputView {
     }()
     private let pickerView: UIPickerView = UIPickerView()
 
-    private var state: () -> State
+    private var dataSource: () -> [String]
 
-    init(state: @escaping () -> State) {
-        self.state = state
+    init(dataSource: @escaping () -> [String]) {
+        self.dataSource = dataSource
         super.init(
             frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 260),
             inputViewStyle: .keyboard
@@ -33,6 +29,13 @@ final class CurrencyPickerView: UIInputView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        if newWindow == nil {
+            pickerView.reloadAllComponents()
+        }
     }
 
     private func setUpView() {
@@ -50,7 +53,7 @@ final class CurrencyPickerView: UIInputView {
         let action = UIAction { [weak self] _ in
             guard let self else { return }
             let selectedIndex = pickerView.selectedRow(inComponent: 0)
-            let text = state().currencies[selectedIndex]
+            let text = dataSource()[selectedIndex]
             endEditing(true)
             replaceText(with: text)
         }
@@ -73,11 +76,11 @@ extension CurrencyPickerView: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        state().currencies.count
+        dataSource().count
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        state().currencies[row]
+        dataSource()[row]
     }
 }
 
