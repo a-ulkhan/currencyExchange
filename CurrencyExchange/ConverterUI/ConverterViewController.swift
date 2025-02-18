@@ -23,6 +23,14 @@ final class ConverterViewController: UIViewController {
     }
 
     private lazy var _view = ConverterContentView()
+    private lazy var convertButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Convert", for: .normal)
+        button.backgroundColor = .green.withAlphaComponent(0.8)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        return button
+    }()
 
     private let viewModel: ConverterViewModelInput
 
@@ -72,5 +80,14 @@ final class ConverterViewController: UIViewController {
 
         let toCurrencySelectorView = CurrencyPickerView { [weak self] in self?.latestState?.targetCurrencyList ?? [] }
         _view.toInputView.setCurrencyKeyboardInputView(toCurrencySelectorView)
+
+        _view.fromInputView.setAmountKeyboardInputAccessory(convertButton)
+
+                let action = UIAction { [weak self] _ in
+                    guard let self = self else { return }
+                    self.view.endEditing(true)
+                }
+
+                convertButton.addAction(action, for: .touchUpInside)
     }
 }

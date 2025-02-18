@@ -59,6 +59,10 @@ final class ConverterInputView: UIView {
         currencyTypeTextField.reloadInputViews()
     }
 
+    func setAmountKeyboardInputAccessory(_ accessoryView: UIView) {
+        amountTextField.inputAccessoryView = accessoryView
+    }
+
     private func makeContentView() -> UIView {
         let stackView = UIStackView(arrangedSubviews: [currencyTypeTextField, amountTextField])
         stackView.spacing = 16
