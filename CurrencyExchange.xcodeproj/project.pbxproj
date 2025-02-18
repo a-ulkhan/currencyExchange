@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		115C78DB2D65003F00C2C3DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 115C78182D64DCBD00C2C3DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 115C781F2D64DCBD00C2C3DB;
+			remoteInfo = CurrencyExchange;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		115C78202D64DCBD00C2C3DB /* CurrencyExchange.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyExchange.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		115C78D72D65003F00C2C3DB /* CurrencyExchangeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyExchangeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,10 +40,22 @@
 			path = CurrencyExchange;
 			sourceTree = "<group>";
 		};
+		115C78D82D65003F00C2C3DB /* CurrencyExchangeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CurrencyExchangeTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		115C781D2D64DCBD00C2C3DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		115C78D42D65003F00C2C3DB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				115C78222D64DCBD00C2C3DB /* CurrencyExchange */,
+				115C78D82D65003F00C2C3DB /* CurrencyExchangeTests */,
 				115C78212D64DCBD00C2C3DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				115C78202D64DCBD00C2C3DB /* CurrencyExchange.app */,
+				115C78D72D65003F00C2C3DB /* CurrencyExchangeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -83,6 +108,29 @@
 			productReference = 115C78202D64DCBD00C2C3DB /* CurrencyExchange.app */;
 			productType = "com.apple.product-type.application";
 		};
+		115C78D62D65003F00C2C3DB /* CurrencyExchangeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 115C78DD2D65003F00C2C3DB /* Build configuration list for PBXNativeTarget "CurrencyExchangeTests" */;
+			buildPhases = (
+				115C78D32D65003F00C2C3DB /* Sources */,
+				115C78D42D65003F00C2C3DB /* Frameworks */,
+				115C78D52D65003F00C2C3DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				115C78DC2D65003F00C2C3DB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				115C78D82D65003F00C2C3DB /* CurrencyExchangeTests */,
+			);
+			name = CurrencyExchangeTests;
+			packageProductDependencies = (
+			);
+			productName = CurrencyExchangeTests;
+			productReference = 115C78D72D65003F00C2C3DB /* CurrencyExchangeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -95,6 +143,11 @@
 				TargetAttributes = {
 					115C781F2D64DCBD00C2C3DB = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					115C78D62D65003F00C2C3DB = {
+						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
+						TestTargetID = 115C781F2D64DCBD00C2C3DB;
 					};
 				};
 			};
@@ -113,12 +166,20 @@
 			projectRoot = "";
 			targets = (
 				115C781F2D64DCBD00C2C3DB /* CurrencyExchange */,
+				115C78D62D65003F00C2C3DB /* CurrencyExchangeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		115C781E2D64DCBD00C2C3DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		115C78D52D65003F00C2C3DB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +196,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		115C78D32D65003F00C2C3DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		115C78DC2D65003F00C2C3DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 115C781F2D64DCBD00C2C3DB /* CurrencyExchange */;
+			targetProxy = 115C78DB2D65003F00C2C3DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		115C78342D64DCBE00C2C3DB /* Debug */ = {
@@ -311,6 +387,45 @@
 			};
 			name = Release;
 		};
+		115C78DE2D65003F00C2C3DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7L6WT5CBQT;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.currencyConverter.CurrencyExchangeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CurrencyExchange.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CurrencyExchange";
+			};
+			name = Debug;
+		};
+		115C78DF2D65003F00C2C3DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7L6WT5CBQT;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.currencyConverter.CurrencyExchangeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CurrencyExchange.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CurrencyExchange";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -328,6 +443,15 @@
 			buildConfigurations = (
 				115C78342D64DCBE00C2C3DB /* Debug */,
 				115C78352D64DCBE00C2C3DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		115C78DD2D65003F00C2C3DB /* Build configuration list for PBXNativeTarget "CurrencyExchangeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				115C78DE2D65003F00C2C3DB /* Debug */,
+				115C78DF2D65003F00C2C3DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
