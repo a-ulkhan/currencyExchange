@@ -26,8 +26,8 @@ final class ConverterViewController: UIViewController {
         super.viewDidLoad()
         _view.update(
             with: .init(
-                sourceState: .init(buttonTitle: "USD", amount: "100"),
-                targetState: .init(buttonTitle: "EUR", amount: "100")
+                sourceState: .init(currencyType: "USD", amount: "100"),
+                targetState: .init(currencyType: "EUR", amount: "100")
             )
         )
     }

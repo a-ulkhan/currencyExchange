@@ -13,17 +13,12 @@ final class ConverterContentView: UIView {
         let targetState: ConverterInputView.State
     }
 
-    var onSourceTypeChanged: (() -> Void)?
-    var onTargetTypeChanged: (() -> Void)?
-    var onExchangeAmountChanged: ((String?) -> Void)?
-
-    private let fromInputView = ConverterInputView(editingStyle: .enabled)
-    private let toInputView = ConverterInputView(editingStyle: .disabled)
+    let fromInputView = ConverterInputView(editingStyle: .enabled)
+    let toInputView = ConverterInputView(editingStyle: .disabled)
 
     init() {
         super.init(frame: .zero)
         setUpLayout()
-        setActions()
     }
 
     required init?(coder: NSCoder) {
@@ -52,18 +47,5 @@ final class ConverterContentView: UIView {
         }
 
         stackView.addArrangedSubview(UIView())
-    }
-
-    private func setActions() {
-        fromInputView.onCurrencyTypeTapped = { [weak self] in
-            self?.onSourceTypeChanged?()
-        }
-        fromInputView.onEditingChanged = { [weak self] text in
-            self?.onExchangeAmountChanged?(text)
-        }
-
-        toInputView.onCurrencyTypeTapped = { [weak self] in
-            self?.onTargetTypeChanged?()
-        }
     }
 }

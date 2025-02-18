@@ -14,20 +14,19 @@ final class ConverterInputView: UIView {
     }
 
     struct State {
-        let buttonTitle: String
+        let currencyType: String
         let amount: String
     }
 
-    var onEditingChanged: ((String?) -> Void)?
-    var onCurrencyTypeTapped: (() -> Void)?
+    var onExchangeAmountChanged: ((String) -> Void)?
+    var onCurrencyTypeSelected: ((String) -> Void)?
 
-    private let currencyTypeButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 32, weight: .semibold)
-        return button
+    private let currencyTypeTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = .systemFont(ofSize: 32, weight: .semibold)
+        return textField
     }()
-    private let textField: UITextField = {
+    private let amountTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 32, weight: .medium)
         textField.keyboardType = .decimalPad
@@ -46,17 +45,22 @@ final class ConverterInputView: UIView {
     }
 
     func update(from state: State) {
-        currencyTypeButton.setTitle(state.buttonTitle, for: .normal)
-        textField.text = state.amount
+        currencyTypeTextField.text = state.currencyType
+        amountTextField.text = state.amount
     }
 
     func setEditingStyle(_ style: EditingStyle) {
-        textField.isEnabled = style == .enabled
-        textField.textColor = style == .enabled ? .label : .secondaryLabel
+        amountTextField.isEnabled = style == .enabled
+        amountTextField.textColor = style == .enabled ? .label : .secondaryLabel
+    }
+
+    func setCurrencyKeyboardInputView(_ inputView: UIView) {
+        currencyTypeTextField.inputView = inputView
+        currencyTypeTextField.reloadInputViews()
     }
 
     private func makeContentView() -> UIView {
-        let stackView = UIStackView(arrangedSubviews: [currencyTypeButton, textField])
+        let stackView = UIStackView(arrangedSubviews: [currencyTypeTextField, amountTextField])
         stackView.spacing = 16
         stackView.layer.cornerRadius = 8
         stackView.backgroundColor = .blue.withAlphaComponent(0.1)
@@ -65,9 +69,9 @@ final class ConverterInputView: UIView {
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.layer.borderWidth = 1
 
-        currencyTypeButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        textField.textAlignment = .right
+        currencyTypeTextField.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        amountTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        amountTextField.textAlignment = .right
         return stackView
     }
 
@@ -78,16 +82,15 @@ final class ConverterInputView: UIView {
     }
 
     private func setActions() {
-        textField.delegate = self
-        let action = UIAction { [weak self] _ in
-            self?.onCurrencyTypeTapped?()
-        }
-        currencyTypeButton.addAction(action, for: .touchUpInside)
+        amountTextField.delegate = self
     }
 }
 
 extension ConverterInputView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        onEditingChanged?(textField.text)
+        guard let text = textField.text else { return }
+        textField === currencyTypeTextField
+            ? onCurrencyTypeSelected?(text)
+            : onExchangeAmountChanged?(text)
     }
 }
