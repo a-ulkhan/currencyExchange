@@ -18,8 +18,11 @@ protocol ConverterViewModelInput: AnyObject {
 final class ConverterViewController: UIViewController {
     struct State {
         let content: ConverterContentView.State
+
         let sourceCurrencyList: [String]
         let targetCurrencyList: [String]
+
+        let isLoading: Bool
     }
 
     private lazy var _view = ConverterContentView()
@@ -61,10 +64,22 @@ final class ConverterViewController: UIViewController {
 
     private func startObservations() {
         state
-            .sink { [unowned self] state in
-                _view.update(with: state.content)
-                latestState = state
+            .map(\.content)
+            .sink { [unowned self] content in
+                _view.update(with: content)
             }
+            .store(in: &cancellables)
+
+        state
+            .map(\.isLoading)
+            .sink { [unowned self] isLoading in
+                _view.isUserInteractionEnabled = !isLoading
+                isLoading ? _view.showLoadingIndicator() : _view.stopLoadingIndicator()
+            }
+            .store(in: &cancellables)
+
+        state
+            .sink { [unowned self] state in latestState = state }
             .store(in: &cancellables)
     }
 

@@ -19,3 +19,22 @@ extension UIView {
         ])
     }
 }
+
+extension UIView {
+    func showLoadingIndicator() {
+        guard getCurrentLoadingView() == nil else { return }
+
+        let view = LoadingIndicatorView()
+        addSubview(view)
+        view.pin(to: self)
+        view.startAnimating()
+    }
+
+    func stopLoadingIndicator() {
+        getCurrentLoadingView()?.removeFromSuperview()
+    }
+
+    private func getCurrentLoadingView() -> UIView? {
+        subviews.first(where: { $0 is LoadingIndicatorView })
+    }
+}

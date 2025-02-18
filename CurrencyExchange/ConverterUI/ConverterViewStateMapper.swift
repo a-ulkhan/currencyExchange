@@ -17,11 +17,12 @@ enum ConverterViewStateMapper {
                 ),
                 targetState: ConverterInputView.State(
                     currencyType: state.toCurrency,
-                    amount: String(state.currentExchangeAmount)
+                    amount: String(format: "%.2f", state.exchangedAmount)
                 )
             ),
             sourceCurrencyList: state.availableCurrencies.filter { $0 != state.toCurrency },
-            targetCurrencyList: state.availableCurrencies.filter { $0 != state.fromCurrency }
+            targetCurrencyList: state.availableCurrencies.filter { $0 != state.fromCurrency },
+            isLoading: state.isLoading
         )
     }
 }
