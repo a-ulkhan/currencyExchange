@@ -1,0 +1,18 @@
+//
+//  CurrencyExchangeDomain.h
+//  CurrencyExchangeDomain
+//
+//  Created by Ulkhan Amiraslanov on 19.02.2025.
+//
+
+#import <Foundation/Foundation.h>
+
+//! Project version number for CurrencyExchangeDomain.
+FOUNDATION_EXPORT double CurrencyExchangeDomainVersionNumber;
+
+//! Project version string for CurrencyExchangeDomain.
+FOUNDATION_EXPORT const unsigned char CurrencyExchangeDomainVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <CurrencyExchangeDomain/PublicHeader.h>
+
+

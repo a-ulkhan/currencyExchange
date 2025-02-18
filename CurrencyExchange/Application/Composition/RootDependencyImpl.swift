@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Core
+import CurrencyExchangePresentation
 
 final class RootDependencyImpl: RootDependency {
     var window: UIWindow

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Core
 
 protocol RootDependency: Dependency {
     var window: UIWindow { get }

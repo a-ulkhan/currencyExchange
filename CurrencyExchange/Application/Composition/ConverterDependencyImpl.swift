@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import CurrencyExchangeDomain
+import CurrencyExchangeData
+import CurrencyExchangePresentation
+import Core
 
 final class ConverterDependencyImpl: ConverterDependency {
     let parent: RootDependencyImpl
