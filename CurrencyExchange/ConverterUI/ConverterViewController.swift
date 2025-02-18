@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ConverterViewController.swift
 //  CurrencyExchange
 //
 //  Created by Ulkhan Amiraslanov on 18.02.2025.
@@ -7,13 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ConverterViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
-
