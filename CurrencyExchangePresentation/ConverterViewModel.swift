@@ -74,9 +74,10 @@ final class ConverterViewModel: ViewModel {
     }
 
     private func fetchExchangeRate() {
+        guard fetchExchangeRateTask == nil else { return }
         router?.showLoading()
-        fetchExchangeRateTask?.cancel()
-        Task {
+    
+        fetchExchangeRateTask = Task {
             try Task.checkCancellation()
             do {
                 let exchangedAmount = try await exchangeRateUseCase.execute(
@@ -89,9 +90,12 @@ final class ConverterViewModel: ViewModel {
                 await MainActor.run {
                     state.exchangedAmount = exchangedAmount
                     router?.closeLoading()
+                    
+                    fetchExchangeRateTask = nil
                 }
                 startPolling()
             } catch let error as FetchExchangeRateError {
+                fetchExchangeRateTask = nil
                 handleFetchError(error)
             }
         }
